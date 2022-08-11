@@ -9,7 +9,8 @@ login TEXT,
 password TEXT,
 nickname TEXT,
 email TEXT,
-friends_ids INT
+friends_ids INT,
+token TEXT
 )""")
 
 db.commit()
@@ -38,7 +39,7 @@ def registration(login, password, nickname, email):
             sql.execute("SELECT * FROM users WHERE nickname = ?", (nickname,))
             if sql.fetchone() is None:
                 random_id = random.randint(10000000, 9999999999)
-                sql.execute(f"INSERT INTO users VALUES ({random_id}, ?, ?, ?, ?, 'NULL')",
+                sql.execute(f"INSERT INTO users VALUES ({random_id}, ?, ?, ?, ?, 'NULL', 'NULL')",
                             (login, password, nickname, email))
                 db.commit()
                 return True
@@ -60,16 +61,14 @@ def registration(login, password, nickname, email):
 
 
 #@function get user friends by users ids - not working
-#def my_friends(id):
-    #for b in sql.execute(f"SELECT friends_ids FROM users WHERE id = {id}"):
-        #if b[0] != 'NULL':
-            #ids = b
-            #print(ids)
-            #friends_nickname = sql.execute(f"SELECT nickname FROM users WHERE id = {ids[0]}").fetchall()
-            #return friends_nickname
-        #else:
-            #return 'No one friend :('
+def my_friends(id):
+    # need json
+    pass
+
 
 def token_check(token, id):
-    # get token from database
-    pass
+    user_token = sql.execute(f"SELECT token FROM users WHERE id = {id}").fetchone()[0]
+    if user_token == token:
+        return True
+    else:
+        return False

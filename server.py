@@ -67,8 +67,8 @@ def my_friends(id):
 
 
 def token_check(token, id):
-    user_token = sql.execute(f"SELECT token FROM users WHERE id = {id}").fetchone()[0]
-    if user_token == token:
+    user_token = sql.execute(f"SELECT token FROM users WHERE id = {id}").fetchone()
+    if user_token[0] == token:
         return True
     else:
         return False

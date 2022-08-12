@@ -1,5 +1,8 @@
 import sqlite3
 import random
+import wmi
+
+c = wmi.WMI()
 
 db = sqlite3.connect("waud.db")
 sql = db.cursor()
@@ -51,13 +54,13 @@ def registration(login, password, nickname, email):
         return 101
 
 
-#def reg():
-    #login = input('придумай логин ')
-    #password = input('придумай пароль ')
-    #nickname = input('придумай никнейм ')
-    #email = input('напиши свою почту ')
-    #a = registration(login, password, nickname, email)
-    #print(a)
+def reg():
+    login = input('придумай логин ')
+    password = input('придумай пароль ')
+    nickname = input('придумай никнейм ')
+    email = input('напиши свою почту ')
+    a = registration(login, password, nickname, email)
+    print(a)
 
 
 #@function get user friends by users ids - not working
@@ -72,3 +75,20 @@ def token_check(token, id):
         return True
     else:
         return False
+
+
+def app_activity():
+    if (c.Win32_Process(name='dota2.exe')):
+        return 'Dota 2'
+    elif (c.Win32_Process(name='osu!.exe')):
+        return 'Osu!'
+    elif (c.Win32_Process(name='csgo.exe')):
+        return 'Counter-Strike: Global Offensive'
+    elif (c.Win32_Process(name='rust.exe')):
+        return 'Rust'
+    elif (c.Win32_Process(name='gta5.exe')):
+        return 'Grand Theft Auto V'
+    elif (c.Win32_Process(name='Discord.exe')):
+        return 'Discord'
+    elif (c.Win32_Process(name='opera.exe')):
+        return 'Opera-GX'
